@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>School Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='gg.css') }}">
+    <style>
+        * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body, html {
+    height: 100%;
+    font-family: Arial, sans-serif;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    justify-content: space-between;
+    padding: 20px;
+    background-color: #f0f0f0;
+}
+
+.header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    background-color: #dc3545;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.logo {
+    width: 60%;
+}
+
+.student-info {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-wrap: wrap;
+    padding: 20px 0;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    gap: 1px; 
+}
+
+.student-cards {
+    float :60%;
+    padding: 100px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    background-color: #f9f9f9;
+   max-height:min-content;
+    max-width:1400px;
+}
+
+.student-card1 {
+    float :50%;
+    padding: 60px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    background-color: #f9f9f9;
+    height: 450px;
+}
+
+.student-card2 {
+    float :50%;
+    padding: 60px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    background-color: #f9f9f9;
+    height: 450px;
+}
+
+.student-card img {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+}
+
+.student-card h2 {
+    font-size: 1.2em;
+    margin-bottom: 5px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+thead {
+    background-color: #007BFF;
+    color: #fff;
+}
+
+thead th {
+    padding: 10px;
+}
+
+tbody td {
+    padding: 10px;
+    border: 1px solid #ddd;
+    text-align: center;
+}
+
+footer {
+    text-align: center;
+    padding: 10px;
+    background-color: #fff;
+    box-shadow: 0 -2px 4px rgba(0,0,0,0.1);
+}
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <img src="{{ url_for('static', filename='scc-logo1.png') }}" alt="School Logo" class="logo">
+        </header>
+        <div class="student-info">
+            {% if student %}
+            <div class="student-cards">
+                <img src="{{ url_for('static', filename=student.idpicture) }}" alt="Student">
+                <h2>Name: {{ student.name }}</h2>
+                <p>Level/Section: {{ student.level_section }}</p>
+                <p>{{ current_time }}</p>
+                <p>RFID: {{ rfid }}</p>
+            </div>
+            {% elif staff %}
+            <div class="student-cards">
+                <img src="{{ url_for('static', filename=staff.idpicture) }}" alt="Staff">
+                <h2>Name: {{ staff.name }}</h2>
+                <p>Department: {{ staff.department }}</p>
+                <p>{{ current_time }}</p>
+                <p>RFID: {{ rfid }}</p>
+            </div>
+            {% else %}
+            <form action="{{ url_for('scan_rfid') }}" method="post">
+                <label for="rfid">Scan RFID:</label>
+                <input type="text" id="rfid" name="rfid">
+                <button type="submit">Submit</button>
+            </form>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>
